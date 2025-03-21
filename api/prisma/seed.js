@@ -6,9 +6,10 @@ async function main() {
     // 1. Création des utilisateurs
     const users = await prisma.user.createMany({
         data: [
-            { email: 'alice@example.com', name: 'Alice' },
-            { email: 'bob@example.com', name: 'Bob' },
-            { email: 'carol@example.com', name: 'Carol' },
+            { email: "admin@exemple.com", name: "admin", role: "admin" },
+            { email: 'alice@example.com', name: 'Alice', role: "user" },
+            { email: 'bob@example.com', name: 'Bob', role: "user" },
+            { email: 'carol@example.com', name: 'Carol', role: "user" },
         ],
     })
 

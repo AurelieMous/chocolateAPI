@@ -1,29 +1,47 @@
 import express, { Request, Response} from "express";
 import RecipesController from "./controller/recipes.controller";
+import UserController from "./controller/user.controller";
 
 const port = 3000;
 const app = express();
 
 app.use(express.json());
 
-// Route des recettes
+// ROUTES DES RECETTES - CRUD
+// tout le monde
 app.get("/recipes", RecipesController.getAllRecipes);
 app.get("/recipes/:id", RecipesController.getOneRecipe);
 //app.get("/recipes/:name", RecipesController.getRecipeByName);
 
-// Créer une recette
+// Utilisateur connecté
 app.post("/recipes", RecipesController.createRecipe);
 
-// Modifier (admin et le créateur de la recette) - Ajouter un middleware pour controler les droits
+// Seulement les personnes pour qui c'est sa recette + Admin
 app.patch("/recipes/:id", RecipesController.updateRecipe);
 
-// Modifier (admin et le créateur de la recette) - Ajouter un middleware pour controler les droits
+// USer id et admin
 app.delete("/recipes/:id", RecipesController.deleteRecipe);
 
-// Route de l'authentification
+// ROUTES USER
+// Admin
+app.get("/user", UserController.getAllUsers);
+// Tout le monde
+//app.get("/user/:id", UserController.getOneUser);
 
+//vient d'authentification
+//app.post("/user", UserController.createUser);
 
-// Route pour les commentaires
+// Par l'user id ou par l'admin
+//app.patch("/user/:id", UserController.updateUser);
+
+// User id ou par l'admin
+//app.delete("/user/:id"), UserController.deleteUser);
+
+// ROUTES AUTHENTICATION
+//app.post("/login", AuthenticationController.login);
+//app.post("/register", AuthenticationController.register);
+
+// ROUTES COMMENTAIRES
 
 app.listen(port, () => {
     console.log(`🟢 ChocolateAPI fonctionne sur le port (${port})`);
