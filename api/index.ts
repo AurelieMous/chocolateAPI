@@ -1,4 +1,4 @@
-import express, { Request, Response} from "express";
+import express from "express";
 import RecipesController from "./controller/recipes.controller";
 import UserController from "./controller/user.controller";
 
@@ -26,13 +26,13 @@ app.delete("/recipes/:id", RecipesController.deleteRecipe);
 // Admin
 app.get("/user", UserController.getAllUsers);
 // Tout le monde
-//app.get("/user/:id", UserController.getOneUser);
+app.get("/user/:id", UserController.getOneUser);
 
-//vient d'authentification
-//app.post("/user", UserController.createUser);
+//Route pour l'admin (qui peut créer un user)
+app.post("/user", UserController.createUser);
 
 // Par l'user id ou par l'admin
-//app.patch("/user/:id", UserController.updateUser);
+app.patch("/user/:id", UserController.updateUser);
 
 // User id ou par l'admin
 //app.delete("/user/:id"), UserController.deleteUser);
