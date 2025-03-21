@@ -1,5 +1,5 @@
 import {Prisma, PrismaClient, User} from '@prisma/client'
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient()
 
@@ -21,6 +21,29 @@ export class UserService {
                 comments: true,
             },
         })
+    }
+
+    getUserByEmail(email: string): Promise<User> {
+        return prisma.user.findUnique({
+            where: { email },
+        })
+    }
+
+    // Permet de vérifier la connection de l'user
+    async getUserCredentials(email: string, password: string): Promise<User | null> {
+        const user = await this.getUserByEmail(email)
+        if (!user)  {
+            console.log("mauvais user")
+            return
+        }
+
+        const isValid = await bcrypt.compare(password, user.password)
+        if (!isValid){
+            console.log("mauvais mot de passe")
+            return
+        }
+
+        return user
     }
 
     async updateUser(id: number, data: Prisma.UserUpdateInput): Promise<User> {

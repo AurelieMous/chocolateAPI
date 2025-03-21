@@ -1,6 +1,7 @@
 import express from "express";
 import RecipesController from "./controller/recipes.controller";
 import UserController from "./controller/user.controller";
+import AuthenticationController from "./controller/authentication.controller";
 
 const port = 3000;
 const app = express();
@@ -38,8 +39,8 @@ app.patch("/user/:id", UserController.updateUser);
 //app.delete("/user/:id"), UserController.deleteUser);
 
 // ROUTES AUTHENTICATION
-//app.post("/login", AuthenticationController.login);
-//app.post("/register", AuthenticationController.register);
+app.post("/login", AuthenticationController.login);
+app.post("/register", AuthenticationController.register);
 
 // ROUTES COMMENTAIRES
 
