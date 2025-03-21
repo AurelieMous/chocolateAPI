@@ -1,0 +1,37 @@
+services:
+  chocolate-api:
+    container_name: chocolate-api
+    build: ./api
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./api/.env
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./api:/app
+    command: sh -c "npx prisma migrate deploy && npm run start"
+
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    container_name: redis
+    image: redis:7
+    restart: always
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
