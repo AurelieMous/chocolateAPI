@@ -2,6 +2,7 @@ import express from "express";
 import RecipesController from "./controller/recipes.controller";
 import UserController from "./controller/user.controller";
 import AuthenticationController from "./controller/authentication.controller";
+import CommentController from "./controller/comment.controller";
 
 const port = 3000;
 const app = express();
@@ -35,6 +36,9 @@ app.post("/user", UserController.createUser);
 // Par l'user id ou par l'admin
 app.patch("/user/:id", UserController.updateUser);
 
+// Supprimer l'user, par l'user concerné ou l'admin
+app.delete("/user/:id", UserController.deleteUser);
+
 // User id ou par l'admin
 //app.delete("/user/:id"), UserController.deleteUser);
 
@@ -43,6 +47,10 @@ app.post("/login", AuthenticationController.login);
 app.post("/register", AuthenticationController.register);
 
 // ROUTES COMMENTAIRES
+app.get("/recipes/:id/comments", CommentController.getAllComments);
+app.put("/comment/:id", CommentController.updateComment);
+app.delete("/comment/:id", CommentController.deleteComment);
+app.post("/comment", CommentController.addComment);
 
 app.listen(port, () => {
     console.log(`🟢 ChocolateAPI fonctionne sur le port (${port})`);
