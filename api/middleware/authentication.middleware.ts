@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import {AuthenticatedUserPayload} from "../auth/authenticate";
 
-const SECRET_KEY = process.env.JWT_SECRET || 'secret';
+const SECRET_KEY = process.env.JWT_SECRET;
 
 export const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
@@ -16,7 +16,8 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
     try {
         const decoded = jwt.verify(token, SECRET_KEY) as AuthenticatedUserPayload;
         next();
-    } catch (error) {
-        return res.status(403).json({ message: 'Token invalide' });
+    } catch (error: any) {
+        console.error("JWT Error:", error.message);
+        return res.status(403).json({ message: 'Token invalide', error: error.message });
     }
 };

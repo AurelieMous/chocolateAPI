@@ -10,12 +10,9 @@ interface JwtUserPayload {
     isVerified: boolean;
 }
 
-const SECRET = process.env.JWT_SECRET || 'votre_clé_secrète';
+const SECRET = process.env.JWT_SECRET;
 
 export function generateToken(user: JwtUserPayload): string {
     return jwt.sign(user, SECRET, { expiresIn: '1h' });
 }
 
-export function verifyToken(token: string): JwtUserPayload {
-    return jwt.verify(token, SECRET) as JwtUserPayload;
-}
