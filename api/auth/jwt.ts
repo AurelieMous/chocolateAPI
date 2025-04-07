@@ -1,10 +1,13 @@
 // ICI ON METS LES FONCTIONS DE GENERATION ET VERIFICATION DU TOKEN
 import jwt from 'jsonwebtoken';
+import {Role} from "@prisma/client";
 
 interface JwtUserPayload {
     id: number;
     email: string;
-    role?: 'user' | 'admin';
+    role?: Role;
+    name: string;
+    isVerified: boolean;
 }
 
 const SECRET = process.env.JWT_SECRET || 'votre_clé_secrète';

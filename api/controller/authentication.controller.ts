@@ -2,6 +2,7 @@ import {UserService} from "../service/user.service";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import {generateToken} from "../auth/jwt";
+import {AuthenticatedUserPayload} from "../auth/authenticate";
 
 class AuthenticationController {
     private userService: UserService;
@@ -33,8 +34,8 @@ class AuthenticationController {
                 id: user.id,
                 email: user.email,
                 role: user.role,
-                username: user.name,
-                isVerified: true, // ou selon ta logique
+                name: user.name,
+                isVerified: true,
             });
 
             return res.status(200).json({ user: user, token });
@@ -60,7 +61,7 @@ class AuthenticationController {
                 id: newUser.id,
                 email: newUser.email,
                 role: newUser.role,
-                username: newUser.name,
+                name: newUser.name,
                 isVerified: true,
             });
 
