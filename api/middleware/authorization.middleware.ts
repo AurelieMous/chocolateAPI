@@ -10,9 +10,9 @@ export function authorizeResourceOwnerOrAdmin(
 ) {
     return async (req: Request, res: Response, next: NextFunction) => {
         const resourceId = parseInt(req.params.id);
-        const user = req.user;
+        const { id, role } = req.body;
 
-        if (!user) {
+        if (!id) {
             return res.status(401).json({ message: 'Non authentifié' });
         }
 
@@ -27,8 +27,8 @@ export function authorizeResourceOwnerOrAdmin(
                 return res.status(404).json({ message: `${String(modelName)} non trouvé` });
             }
 
-            const isOwner = resource[ownerField] === user.id;
-            const isAdmin = user.role === 'admin';
+            const isOwner = resource[ownerField] === id;
+            const isAdmin = role === 'admin';
 
             if (!isOwner && !isAdmin) {
                 return res.status(403).json({ message: 'Accès interdit' });
@@ -42,13 +42,15 @@ export function authorizeResourceOwnerOrAdmin(
     };
 }
 
-// Autorisation si la personne est seulement admin, pas besoin des ressources, juste vérifier le role
+// Autorisation si la personne est seulement admin
 export function authorizeAdmin(req: Request, res: Response, next: NextFunction) {
-    if (!req.user) {
+    const { id, role } = req.body;
+
+    if (!id) {
         return res.status(401).json({ message: 'Non authentifié' });
     }
 
-    if (req.user.role !== 'admin') {
+    if (role !== 'admin') {
         return res.status(403).json({ message: 'Accès réservé aux administrateurs' });
     }
 

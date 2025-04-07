@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import {AuthenticatedUserPayload} from "./authenticate";
+import {AuthenticatedUserPayload} from "../auth/authenticate";
 
 const SECRET_KEY = process.env.JWT_SECRET || 'secret';
 
@@ -15,7 +15,6 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
 
     try {
         const decoded = jwt.verify(token, SECRET_KEY) as AuthenticatedUserPayload;
-        req.user = decoded;
         next();
     } catch (error) {
         return res.status(403).json({ message: 'Token invalide' });
