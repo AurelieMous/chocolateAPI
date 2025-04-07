@@ -1,4 +1,6 @@
 import {Prisma, PrismaClient} from '@prisma/client'
+import { Comment } from '@prisma/client';
+
 
 const prisma = new PrismaClient()
 
@@ -22,23 +24,20 @@ export class CommentService {
             data
         })
     }
-    async createComment(input: {
-        content: string,
-        userId: number,
-        recipeId: number
-    }): Promise<Comment> {
+    async createComment(content: string, userId: number, recipeId: number): Promise<Comment> {
         return prisma.comment.create({
             data: {
-                content: input.content,
+                content: content,
                 recipe: {
-                    connect: { id: input.recipeId },
+                    connect: { id: recipeId },
                 },
                 user: {
-                    connect: { id: input.userId },
+                    connect: { id: userId },
                 },
             },
         });
     }
+
     async deleteComment(commentId: number): Promise<Comment> {
         return prisma.comment.delete({where : {id: commentId}})
     }

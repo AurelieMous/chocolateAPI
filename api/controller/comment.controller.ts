@@ -44,8 +44,11 @@ class CommentController {
 
     addComment = async (req: Request, res: Response) => {
         try {
-            const input = req.body;
-            const comment = this.commentService.createComment(input);
+            const recipeId = parseInt(req.params.recipeId, 10);
+            // Via le jeton JWT
+            const userId = req.user.id;
+            const { content } = req.body;
+            const comment = this.commentService.createComment(content, userId, recipeId);
             return res.status(200).json(comment);
         }
         catch (error) {

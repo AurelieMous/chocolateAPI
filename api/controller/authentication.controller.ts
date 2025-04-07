@@ -1,6 +1,7 @@
 import {UserService} from "../service/user.service";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
+import {generateToken} from "../auth/jwt";
 
 class AuthenticationController {
     private userService: UserService;
@@ -26,7 +27,19 @@ class AuthenticationController {
             }
 
             const { password: _, ...safeUser } = user
-            return res.status(200).json(safeUser)
+
+            // génération du Token
+            const token = generateToken({
+                id: user.id,
+                email: user.email,
+                role: user.role,
+                username: user.name,
+                isVerified: true, // ou selon ta logique
+            });
+
+            return res.status(200).json({ user: user, token });
+
+
 
         } catch (err) {
             console.error('Erreur lors du login', err)
@@ -35,8 +48,26 @@ class AuthenticationController {
     }
 
     register = async (req: Request, res: Response) => {
-        const {name, email, password} = req.body;
-        const newUser = await this.userService.createUser({name, email, password});
+        const { name, email, password } = req.body;
+
+        try {
+            const newUser = await this.userService.createUser({ name, email, password });
+
+            const { password: _, ...safeUser } = newUser;
+
+            // Génération du token
+            const token = generateToken({
+                id: newUser.id,
+                email: newUser.email,
+                role: newUser.role,
+                username: newUser.name,
+                isVerified: true,
+            });
+
+            return res.status(201).json({ user: safeUser, token });
+    } catch (err) {
+            return res.status(500).json({ message: "Erreur lors du login", err })
+        }
     }
 }
 
