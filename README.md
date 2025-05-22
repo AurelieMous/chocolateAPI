@@ -13,11 +13,10 @@
 - 📚 **Gestion des recettes**
 
   - Créer, lire, mettre à jour, supprimer une recette (CRUD)
-  - Filtrer ou rechercher des recettes par titre, ingrédient, etc.
 - ✍️ **Commentaires & notes**
 
   - Ajouter une note ou un commentaire sur une recette
-  - Modifier ou supprimer son commentaire
+  - Modifier ou supprimer son propre commentaire
 - 👥 **Rôles & permissions**
 
   - **Utilisateurs** : peuvent consulter, commenter, noter
@@ -31,39 +30,21 @@
 ## 🛠️ Stack technique
 
 
-| Techno         | Rôle                            |
-| -------------- | -------------------------------- |
-| Node.js        | Serveur backend                  |
-| TypeScript     | Typage statique                  |
-| Express        | Framework HTTP/API REST          |
-| Axios          | Requêtes HTTP côté client/API |
-| PostgreSQL     | Base de données relationnelle   |
-| Redis          | Cache                            |
-| Bcryptjs       | Hashing des mots de passe        |
-| JSON Web Token | Authentification                 |
-| Docker         | Conteneurisation du projet       |
-
----
-
-## 🐳 Utilisation avec Docker
-
-ChocolateAPI utilise Docker pour lancer l’API, PostgreSQL et Redis dans un environnement conteneurisé.
-
----
-
-## 🧱 Routes prévues (à venir)
 
 
-| Méthode | Route               | Accès     | Description                  |
-| -------- | ------------------- | ---------- | ---------------------------- |
-| POST     | `/auth/register`    | Public     | Créer un compte utilisateur |
-| POST     | `/auth/login`       | Public     | Se connecter                 |
-| GET      | `/recipes`          | Public     | Lister toutes les recettes   |
-| GET      | `/recipes/:id`      | Public     | Détail d'une recette        |
-| POST     | `/recipes`          | Admin/User | Créer une recette           |
-| PUT      | `/recipes/:id`      | Admin/User | Modifier une recette         |
-| DELETE   | `/recipes/:id`      | Admin      | Supprimer une recette        |
-| POST     | `/recipes/:id/rate` | User       | Noter/commenter une recette  |
+| Techno         | Rôle                                  |
+| -------------- | -------------------------------------- |
+| Node.js        | Serveur backend                        |
+| TypeScript     | Typage statique                        |
+| Express        | Framework HTTP/API REST                |
+| Axios          | Requêtes HTTP côté client/API       |
+| PostgreSQL     | Base de données relationnelle         |
+| Swagger        | Documentation API                      |
+| Bcryptjs       | Hashing des mots de passe              |
+| JSON Web Token | Authentification                       |
+| Docker         | Conteneurisation du projet             |
+| Jest           | Tests unitaires                        |
+| Redis          | Cache pour améliorer les performances |
 
 ## 🧁 Auteur
 

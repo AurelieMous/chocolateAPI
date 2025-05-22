@@ -2,7 +2,6 @@ import {UserService} from "../service/user.service";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import {generateToken} from "../auth/jwt";
-import {AuthenticatedUserPayload} from "../auth/authenticate";
 
 class AuthenticationController {
     private userService: UserService;
