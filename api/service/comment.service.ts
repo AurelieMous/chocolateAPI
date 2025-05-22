@@ -6,17 +6,30 @@ const prisma = new PrismaClient()
 
 export class CommentService {
     // On veut charger les commentaires par rapport à l'id d'une recette
-    async getAllComments(recipeId: number): Promise<Comment[]> {
+    async getAllCommentsByRecipe(recipeId: number): Promise<Comment[]> {
         return prisma.comment.findMany({
             where: {
                 recipeId: recipeId, // Permet de trier les commentaires avec le paramètre id de la recette
             },
             include: {
                 user: true,
-                recipe: true,
+                recipe: false,
             },
         })
     }
+
+    async getCommentByUser(userId: number): Promise<Comment[]> {
+        return prisma.comment.findMany({
+            where: {
+                userId: userId,
+            },
+            include: {
+                user: false,
+                recipe: true,
+            }
+        })
+    }
+
     // On passe l'id du commentaire
     async updateComment(id: number, data: Prisma.CommentUpdateInput): Promise<Comment> {
         return prisma.comment.update({

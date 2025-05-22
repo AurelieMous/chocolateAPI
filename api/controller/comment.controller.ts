@@ -10,10 +10,21 @@ class CommentController {
     }
 
     // Récupère les comments via l'id de la recette
-    getAllComments = async (req: Request, res: Response) => {
+    getAllCommentsByRecipe = async (req: Request, res: Response) => {
         try {
             const recipeId = req.body;
-            const comments = this.commentService.getAllComments(recipeId);
+            const comments = this.commentService.getAllCommentsByRecipe(recipeId);
+            return res.status(200).json(comments);
+        }
+        catch (error) {
+            res.status(500).json({"message": "Une erreur est survenue lors de la récupération des commentaires", error});
+        }
+    }
+
+    getCommentByUser = async (req: Request, res: Response) => {
+        try{
+            const userId = req.body;
+            const comments = this.commentService.getCommentByUser(userId);
             return res.status(200).json(comments);
         }
         catch (error) {
